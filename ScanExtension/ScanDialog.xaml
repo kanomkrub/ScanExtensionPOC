@@ -1,0 +1,45 @@
+﻿<Window x:Class="ScanExtension.ScanDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ScanExtension"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="ScanDialog" Height="300" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <GroupBox Header="Image" Margin="5">
+                <StackPanel x:Name="stack1" VerticalAlignment="Center">
+                    <Button x:Name="scanButton" Height="70" Click="scanButton_Click">
+                        <materialDesign:PackIcon Kind="Play" Width="65" Height="65"/>
+                    </Button>
+                </StackPanel>
+            </GroupBox>
+        </ScrollViewer>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <GroupBox Margin="5" Header="Properties">
+                <StackPanel>
+                    <Button Height="60" Margin="5" Command="{Binding ScanCommand}">
+                        <materialDesign:PackIcon Kind="QrcodeScan" Width="50" Height="50"/>
+                    </Button>
+                    <ComboBox Margin="5" x:Name="docTypeComboBox" ></ComboBox>
+                    <TextBlock Margin="3">Property1</TextBlock>
+                    <TextBox Margin="3">efe</TextBox>
+                    <TextBlock Margin="3">Property1</TextBlock>
+                    <TextBox Margin="3">efe</TextBox>
+                    <TextBlock Margin="3">Property1</TextBlock>
+                    <TextBox Margin="3">efe</TextBox>
+                    <TextBlock Margin="3">Property1</TextBlock>
+                    <TextBox Margin="3">efe</TextBox>
+                    <Button x:Name="okButton" Margin="5">OK</Button>
+                    <Button x:Name="cancelButton" Margin="5">Cancel</Button>
+                </StackPanel>
+            </GroupBox>
+        </ScrollViewer>
+    </Grid>
+</Window>
