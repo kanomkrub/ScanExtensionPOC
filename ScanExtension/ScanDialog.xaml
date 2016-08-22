@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ScanExtension"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ScanDialog" Height="300" Width="300">
+        Title="ScanDialog" Height="300" Width="300" WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
@@ -21,7 +21,7 @@
                 </StackPanel>
             </GroupBox>
         </ScrollViewer>
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <ScrollViewer x:Name="setPropPanel" IsEnabled="False" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <GroupBox Margin="5" Header="Properties">
                 <StackPanel>
                     <Button Height="60" Margin="5" Command="{Binding ScanCommand}">
@@ -36,8 +36,8 @@
                     <TextBox Margin="3">efe</TextBox>
                     <TextBlock Margin="3">Property1</TextBlock>
                     <TextBox Margin="3">efe</TextBox>
-                    <Button x:Name="okButton" Margin="5">OK</Button>
-                    <Button x:Name="cancelButton" Margin="5">Cancel</Button>
+                    <Button x:Name="okButton" Click="okButton_Click" Margin="5">OK</Button>
+                    <Button x:Name="cancelButton" Click="cancelButton_Click" Margin="5">Cancel</Button>
                 </StackPanel>
             </GroupBox>
         </ScrollViewer>
