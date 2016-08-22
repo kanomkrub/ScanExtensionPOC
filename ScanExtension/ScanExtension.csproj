@@ -79,9 +79,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GdPicture.NET.11, Version=11.2.0.18, Culture=neutral, PublicKeyToken=1acb5b54ec09fcd9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\GdPicture.NET 11\Redist\Framework 4.5\GdPicture.NET.11.dll</HintPath>
+    <Reference Include="GdPicture.NET.11">
+      <HintPath>lib\GdPicture.NET.11.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -188,6 +187,15 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GdPicture.NET.11.document.analyzer.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GdPicture.NET.11.filters.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GdPicture.NET.11.image.gdimgplug.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="GdPicture.NET.11.twain.client.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

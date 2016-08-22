@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ScanExtension"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ScanDialog" Height="300" Width="300" WindowState="Maximized">
+        Title="ScanDialog" Height="500" Width="500" WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
@@ -22,20 +22,37 @@
             </GroupBox>
         </ScrollViewer>
         <ScrollViewer x:Name="setPropPanel" IsEnabled="False" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <GroupBox Margin="5" Header="Properties">
+            <GroupBox Margin="5" Header="Properties" x:Name="groupBoxProp">
                 <StackPanel>
-                    <Button Height="60" Margin="5" Command="{Binding ScanCommand}">
+                    <Button Height="60" Margin="5" Command="{Binding ScanCommand}" Click="Button_Click">
                         <materialDesign:PackIcon Kind="QrcodeScan" Width="50" Height="50"/>
                     </Button>
+                    <Expander x:Name="qrExpander" IsExpanded="False" HorizontalAlignment="Stretch">
+                        <Expander.Header>
+                            <TextBlock Text="QR Result" />
+                        </Expander.Header>
+                        <StackPanel x:Name="QRResultStack"  Orientation="Vertical" Margin="4">
+                        </StackPanel>
+                    </Expander>
+                    <DockPanel MinWidth="70"   >
+                        <materialDesign:PackIcon DockPanel.Dock="Left"  Kind="AccountAlert"  Foreground="{Binding ElementName=fileNameTextBox, Path=BorderBrush}" VerticalAlignment="Center" Width="22" Height="22" />
+                        <TextBox Margin="3" x:Name="fileNameTextBox"  materialDesign:HintAssist.Hint="File Name.." Style="{StaticResource MaterialDesignFloatingHintTextBox}" BorderBrush="#89FF0000" SelectionBrush="Red"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <materialDesign:PackIcon   Kind="CommentText" Foreground="{Binding ElementName=descTextBox, Path=BorderBrush}" VerticalAlignment="Center" Margin="0" Width="22" Height="22" />
+                        <TextBox Margin="3" x:Name="descTextBox"  materialDesign:HintAssist.Hint="Description.."  Style="{StaticResource MaterialDesignFloatingHintTextBox}" BorderBrush="#8910A582"/>
+                    </DockPanel>
                     <ComboBox Margin="5" x:Name="docTypeComboBox" ></ComboBox>
-                    <TextBlock Margin="3">Property1</TextBlock>
-                    <TextBox Margin="3">efe</TextBox>
-                    <TextBlock Margin="3">Property1</TextBlock>
-                    <TextBox Margin="3">efe</TextBox>
-                    <TextBlock Margin="3">Property1</TextBlock>
-                    <TextBox Margin="3">efe</TextBox>
-                    <TextBlock Margin="3">Property1</TextBlock>
-                    <TextBox Margin="3">efe</TextBox>
+                    <StackPanel x:Name="propertyStack">
+                        <TextBlock Margin="3">Property1</TextBlock>
+                        <TextBox Margin="3">efe</TextBox>
+                        <TextBlock Margin="3">Property1</TextBlock>
+                        <TextBox Margin="3">efe</TextBox>
+                        <TextBlock Margin="3">Property1</TextBlock>
+                        <TextBox Margin="3">efe</TextBox>
+                        <TextBlock Margin="3">Property1</TextBlock>
+                        <TextBox Margin="3">efe</TextBox>
+                    </StackPanel>
                     <Button x:Name="okButton" Click="okButton_Click" Margin="5">OK</Button>
                     <Button x:Name="cancelButton" Click="cancelButton_Click" Margin="5">Cancel</Button>
                 </StackPanel>
