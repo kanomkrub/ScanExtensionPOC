@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -17,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ZXing;
 using ZXing.Common;
+using ZXing.QrCode;
 using ZXing.QrCode.Internal;
 
 namespace ScanExtension
@@ -34,7 +36,7 @@ namespace ScanExtension
         public ScanDialog(string serviceUri, string ticket, string folderId, string repositoryId)
         {
             InitializeComponent();
-            this.serviceURI = serviceUri;
+            this.serviceURI = serviceUri + "/browser/";
             this.ticket = ticket;
             this.folderId = folderId;
             this.repositoryId = repositoryId;
@@ -76,7 +78,7 @@ namespace ScanExtension
             var tempFile = System.IO.Path.GetTempFileName();
             var ids = GDScanService.Scan(Handle);
 
-            if (ids.Count > 0) stack1.Children.RemoveAt(0);
+            //if (ids.Count > 0) stack1.Children.RemoveAt(0);
 
             for (int i = 0; i < ids.Count; i++)
             {
@@ -84,7 +86,7 @@ namespace ScanExtension
 
                 byte[] imageBytes = null;
                 int lengths = 0;
-                gdpicture.SaveAsByteArray(ids[i], ref imageBytes, ref lengths, GdPicture11.DocumentFormat.DocumentFormatJPEG, 50);
+                gdpicture.SaveAsByteArray(ids[i], ref imageBytes, ref lengths, GdPicture11.DocumentFormat.DocumentFormatJPEG, 60);
                 var bitmapSource = (BitmapSource)new ImageSourceConverter().ConvertFrom(imageBytes);
                 stack1.Children.Add(new System.Windows.Controls.Image() { Source = bitmapSource });
                 stack1.Children.Add(new Separator());
@@ -121,10 +123,10 @@ namespace ScanExtension
             //tempFile = @"D:\tessj.jpg";
             var docType = "MEAPOC";
             var properties = new Dictionary<string, string>();
-            properties.Add("QR1", "value1");
-            properties.Add("QR2", "value2");
-            properties.Add("QR3", "value3");
-            properties.Add("QR4", "value4");
+            properties.Add("QR1", prop1.Text);
+            properties.Add("QR2", prop2.Text);
+            properties.Add("QR3", prop3.Text);
+            properties.Add("QR4", prop4.Text);
             var mediaType = "application/pdf";
             ExportService.Export(tempFile, ticket, mediaType, docType, properties, serviceURI, repositoryId, folderId);
             try { File.Delete(tempFile); } catch (Exception ex) { }
@@ -140,47 +142,83 @@ namespace ScanExtension
         {
             foreach(UIElement item in stack1.Children)
             {
-                if (item.GetType() != typeof(System.Windows.Controls.Image)) continue;
-                var bSource = (BitmapSource)((System.Windows.Controls.Image)item).Source;
-                using (var bitmap = BitmapFromSource(bSource))
+                try
                 {
-                    IBarcodeReader reader = new BarcodeReader();
-                    LuminanceSource source = new BitmapLuminanceSource(bitmap);
-                    var binarizer = new HybridBinarizer(source);
-                    var binBitmap = new BinaryBitmap(binarizer);
-                    BitMatrix bm = binBitmap.BlackMatrix;
-                    Detector detector = new Detector(bm);
-                    DetectorResult dtectResult = detector.detect();
-                    QRResultStack.Children.Clear();
-                    string retStr = "Barcode detected at ";
-                    if (dtectResult != null)
+                    if (item.GetType() != typeof(System.Windows.Controls.Image)) continue;
+                    var bSource = (BitmapSource)((System.Windows.Controls.Image)item).Source;
+                    using (var bitmap = BitmapFromSource(bSource))
                     {
-                        foreach (ResultPoint point in dtectResult.Points)
+                        var reader = new QRCodeReader();
+                        LuminanceSource source = new BitmapLuminanceSource(bitmap);
+                        var binarizer = new HybridBinarizer(source);
+                        var binBitmap = new BinaryBitmap(binarizer);
+                        BitMatrix bm = binBitmap.BlackMatrix;
+                        Detector detector = new Detector(bm);
+                        //Hashtable hints = new Hashtable();
+                        //hints.Add(EncodeHintType.CHARACTER_SET, "utf-8");
+                        //hints.Add(EncodeHintType.CHARACTER_SET, "unicode");
+                        var hintDic = new Dictionary<DecodeHintType, object>();
+                        hintDic.Add(DecodeHintType.TRY_HARDER, true);
+                        hintDic.Add(DecodeHintType.CHARACTER_SET, "utf-8");
+                        //hintDic.Add(DecodeHintType.CHARACTER_SET, "ascii");
+                        //hintDic.Add(DecodeHintType.PURE_BARCODE, Boolean.FALSE);
+                        DetectorResult dtectResult = detector.detect(hintDic);
+                        QRResultStack.Children.Clear();
+                        
+                        var retStr = "Barcode detected at ";
+                        if (dtectResult != null)
                         {
-                            retStr += point.ToString() + ", ";
+                            foreach (ResultPoint point in dtectResult.Points)
+                            {
+                                retStr += point.ToString() + ", ";
+                            }
+                            var result = reader.decode(binBitmap, hintDic);
+                            var qrText = "";
+                            if (result == null)
+                            {
+                                qrText = "Failed to decode..., Please re-scan document.";
+                                QRResultStack.Children.Insert(0, new TextBox() { Text = retStr, IsReadOnly = true, Foreground = System.Windows.Media.Brushes.DarkOrange, MinLines=2, MaxWidth = 300, TextWrapping = TextWrapping.Wrap });
+                                QRResultStack.Children.Add(new TextBox() { Text = qrText, IsReadOnly = true, MinLines = 3, TextWrapping = TextWrapping.Wrap, MaxWidth=300 });
+
+                            }
+                            else
+                            {
+                                qrText = result.Text;
+                                QRResultStack.Children.Insert(0, new TextBox() { Text = retStr, IsReadOnly = true, Foreground = System.Windows.Media.Brushes.DarkGreen, MinLines = 2, MaxWidth = 300, TextWrapping = TextWrapping.Wrap });
+                                QRResultStack.Children.Add(new TextBox() { Text = qrText, IsReadOnly = true, MinLines = 2, TextWrapping = TextWrapping.Wrap, MaxWidth = 300 });
+
+                                qrExpander.IsExpanded = true;
+                                //set metadata
+
+
+                                //this.propertyStack.Children.Clear();
+
+                                var props = qrText.Split('|');
+                                prop1.Text = props.Length > 0 ? props[0] : "";
+                                prop2.Text = props.Length > 1 ? props[1] : "";
+                                prop3.Text = props.Length > 2 ? props[2] : "";
+                                prop4.Text = props.Length > 3 ? props[3] : "";
+
+
+
+                                break;
+                            }
+                            
                         }
-                        var result = reader.Decode(bitmap);
-                        var qrText = "";
-                        if (result == null) qrText = "Failed to decode..., Please re-scan document.";
                         else
                         {
-                            qrText = result.Text;
-                            QRResultStack.Children.Add(new TextBox() { Text = retStr, IsReadOnly = true, Foreground = System.Windows.Media.Brushes.Beige });
-                            QRResultStack.Children.Add(new TextBox() { Text = qrText, IsReadOnly = true });
-
-                            //set metadata
-
-                            break;
+                            retStr = "Barcode not found please re-scan the document.";
+                            QRResultStack.Children.Add(new TextBox() { Text = retStr, IsReadOnly = true, Foreground = System.Windows.Media.Brushes.DarkOrange, MinLines = 2 });
                         }
+                        qrExpander.IsExpanded = true;
                     }
-                    else
-                    {
-                        retStr = "Barcode not found please re-scan the document.";
-                        QRResultStack.Children.Add(new TextBox() { Text = retStr, IsReadOnly = true, Foreground = System.Windows.Media.Brushes.DarkOrange });
-                    }
-                    qrExpander.IsExpanded = true;
+                }
+                catch(Exception ex)
+                {
+
                 }
             }
         }
+        
     }
 }

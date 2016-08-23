@@ -57,8 +57,8 @@ namespace ScanExtension
             var repositoryID = "628a5308-0e85-4800-ab1d-244525c905a8";
             var folderId = "7293cef9-0e73-48d1-8120-1a8e4efeb9cf";
             var ticket = "85782237-c9f8-4982-86f6-24f7a042f2b4";
-            ScanDialog diag = new ScanDialog(serviceURI, ticket, folderId, repositoryID);
-            diag.ShowDialog();
+            //ScanDialog diag = new ScanDialog(serviceURI, ticket, folderId, repositoryID);
+            //diag.ShowDialog();
         }
 
     }

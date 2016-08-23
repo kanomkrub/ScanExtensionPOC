@@ -21,8 +21,8 @@
                 </StackPanel>
             </GroupBox>
         </ScrollViewer>
-        <ScrollViewer x:Name="setPropPanel" IsEnabled="False" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <GroupBox Margin="5" Header="Properties" x:Name="groupBoxProp">
+        <ScrollViewer x:Name="setPropPanel" IsEnabled="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <GroupBox Margin="5" Header="Properties" x:Name="groupBoxProp" MaxWidth="330">
                 <StackPanel>
                     <Button Height="60" Margin="5" Command="{Binding ScanCommand}" Click="Button_Click">
                         <materialDesign:PackIcon Kind="QrcodeScan" Width="50" Height="50"/>
@@ -42,16 +42,18 @@
                         <materialDesign:PackIcon   Kind="CommentText" Foreground="{Binding ElementName=descTextBox, Path=BorderBrush}" VerticalAlignment="Center" Margin="0" Width="22" Height="22" />
                         <TextBox Margin="3" x:Name="descTextBox"  materialDesign:HintAssist.Hint="Description.."  Style="{StaticResource MaterialDesignFloatingHintTextBox}" BorderBrush="#8910A582"/>
                     </DockPanel>
-                    <ComboBox Margin="5" x:Name="docTypeComboBox" ></ComboBox>
+                    <ComboBox Margin="5" x:Name="docTypeComboBox" SelectedIndex="0" >
+                        <ComboBoxItem Content="DocumentType1"/>
+                    </ComboBox>
                     <StackPanel x:Name="propertyStack">
-                        <TextBlock Margin="3">Property1</TextBlock>
-                        <TextBox Margin="3">efe</TextBox>
-                        <TextBlock Margin="3">Property1</TextBlock>
-                        <TextBox Margin="3">efe</TextBox>
-                        <TextBlock Margin="3">Property1</TextBlock>
-                        <TextBox Margin="3">efe</TextBox>
-                        <TextBlock Margin="3">Property1</TextBlock>
-                        <TextBox Margin="3">efe</TextBox>
+                        <TextBlock Margin="3" Foreground="DarkGoldenrod" >property: property1</TextBlock>
+                        <TextBox x:Name="prop1" Margin="3"></TextBox>
+                        <TextBlock Margin="3" Foreground="DarkGoldenrod">property: property2</TextBlock>
+                        <TextBox x:Name="prop2" Margin="3"></TextBox>
+                        <TextBlock Margin="3" Foreground="DarkGoldenrod">property: property3</TextBlock>
+                        <TextBox x:Name="prop3" Margin="3"></TextBox>
+                        <TextBlock Margin="3" Foreground="DarkGoldenrod">property: property4</TextBlock>
+                        <TextBox x:Name="prop4" Margin="3"></TextBox>
                     </StackPanel>
                     <Button x:Name="okButton" Click="okButton_Click" Margin="5">OK</Button>
                     <Button x:Name="cancelButton" Click="cancelButton_Click" Margin="5">Cancel</Button>

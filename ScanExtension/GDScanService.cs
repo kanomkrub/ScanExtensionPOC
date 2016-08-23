@@ -33,7 +33,8 @@ namespace ScanExtension
             //string info = null;
             //gdPicture.TwainGetSourceVersionInfo(handle, 1, ref major, ref minor, ref language, ref country, ref info);
             //var text = string.Format("{0}", gdPicture.TwainGetSourceName(handle, 1), major, minor);
-
+            //gdPicture.TwainSetAutomaticColor(true);
+            
             var x = gdPicture.TwainGetState();
             var o = gdPicture.TwainHasFeeder();
             gdPicture.TwainOpenSource(0, sourceName);
@@ -41,11 +42,11 @@ namespace ScanExtension
             //var opened = gdPicture.TwainOpenSource(handle, sourceName);
             //gdPicture.twain
             var online = gdPicture.TwainIsDeviceOnline();
-
+            gdPicture.TwainSetAutomaticColor(false);
             //gdPicture.TwainSelectFeeder(true);
             //gdPicture.TwainSetAutoFeed(true);
             var maxRes = gdPicture.TwainGetAvailableXResolutionCount();
-            gdPicture.TwainSetResolution(700);
+            gdPicture.TwainSetResolution(300);
             gdPicture.TwainSetPaperSize(TwainPaperSize.A4);
             //gdPicture.TwainSetMultiTransfer(true);
             //gdPicture.twainset
