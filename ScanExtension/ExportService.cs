@@ -16,17 +16,18 @@ namespace ScanExtension
             //var serviceUri = batch.ExportUri;
             //var cabId = batch.ExportRepository;
             //var folderId = batch.ExportFolder;
-            //var userName = batch.ExportUser;
-            //var password = batch.ExportPassword;
+            var userName = "weblogic2";
+            var password = "password";
+            serviceUri = "http://192.168.1.71:1605/rest/cmis/browser";
             var uriCreate = string.Format("{0}/root?objectId={1}", cabId, folderId);
             var docName = Path.GetFileName(filePath);
             var bytes = File.ReadAllBytes(filePath);
             HttpClient client = new HttpClient() { BaseAddress = new Uri(serviceUri) };
-            //var basicAuthenValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(userName + ":" + password));
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthenValue);
+            var basicAuthenValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(userName + ":" + password));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthenValue);
             var values = new List<KeyValuePair<string,string>>
                     {
-                        new KeyValuePair<string, string>("token", token),
+                        //new KeyValuePair<string, string>("token", token),
                         new KeyValuePair<string, string>("cmisaction", "createDocument"),
                         new KeyValuePair<string, string>("propertyId[0]", "cmis:name"),
                         new KeyValuePair<string, string>("propertyValue[0]", docName),

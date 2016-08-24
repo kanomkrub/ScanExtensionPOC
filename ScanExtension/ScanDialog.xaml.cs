@@ -121,12 +121,14 @@ namespace ScanExtension
             }
 
             //tempFile = @"D:\tessj.jpg";
-            var docType = "MEAPOC";
+            var docType = "MEA01";
             var properties = new Dictionary<string, string>();
-            properties.Add("QR1", prop1.Text);
-            properties.Add("QR2", prop2.Text);
-            properties.Add("QR3", prop3.Text);
-            properties.Add("QR4", prop4.Text);
+            properties.Add("MEA_metadata01", prop1.Text);
+            properties.Add("MEA_metadata02", prop2.Text);
+            properties.Add("MEA_metadata03", prop3.Text);
+            properties.Add("MEA_metadata04", prop4.Text);
+            properties.Add("MEA_metadata05", prop4.Text);
+            properties.Add("MEA_metadata06", prop4.Text);
             var mediaType = "application/pdf";
             ExportService.Export(tempFile, ticket, mediaType, docType, properties, serviceURI, repositoryId, folderId);
             try { File.Delete(tempFile); } catch (Exception ex) { }
