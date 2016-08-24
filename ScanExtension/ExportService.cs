@@ -32,12 +32,7 @@ namespace ScanExtension
                         new KeyValuePair<string, string>("propertyId[0]", "cmis:name"),
                         new KeyValuePair<string, string>("propertyValue[0]", docName),
                         new KeyValuePair<string, string>("propertyId[1]", "cmis:objectTypeId"),
-                        //new KeyValuePair<string, string>("propertyValue[1]", "cmis:document"),
                         new KeyValuePair<string, string>("propertyValue[1]", "D:"+docType),
-                        //new KeyValuePair<string, string>("propertyId[2]", "kk:metaData:App_ID"),
-                        //new KeyValuePair<string, string>("propertyValue[2]", "A001"),
-                        //new KeyValuePair<string, string>("propertyId[3]", "kk:metaData:Customer_ID"),
-                        //new KeyValuePair<string, string>("propertyValue[3]", "C001")
                     };
 
             for(int i =0;i < properties.Count; i++)

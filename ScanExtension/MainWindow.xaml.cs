@@ -47,31 +47,19 @@ namespace ScanExtension
 
             var scriptObj = new ObjectForScriptingHelper(this);
             browser.RegisterJsObject("external", scriptObj, false);
-
-            //browser.Address = @"http://localhost";
+            
             browser.Address = @"http://192.168.1.71";
             browser.Focus();
-
-
-
-            //var serviceURI = "http://172.20.36.59:9013/browser/";
-            //var repositoryID = "628a5308-0e85-4800-ab1d-244525c905a8";
-            //var folderId = "7293cef9-0e73-48d1-8120-1a8e4efeb9cf";
-            //var ticket = "85782237-c9f8-4982-86f6-24f7a042f2b4";
-            //ScanDialog diag = new ScanDialog(serviceURI, ticket, folderId, repositoryID);
-            //diag.ShowDialog();
         }
 
     }
     public class ObjectForScriptingHelper
     {
         MainWindow mExternalWPF;
-        //string serviceURI;
 
         public ObjectForScriptingHelper(Window w)
         {
             this.mExternalWPF = (MainWindow)w;
-            //this.serviceURI = serviceURI;
         }
 
         public bool InvokeScanDialog(string ticket, string repositoryId, string folderId, string serviceUri)

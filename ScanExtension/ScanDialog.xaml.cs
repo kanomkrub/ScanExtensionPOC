@@ -42,20 +42,6 @@ namespace ScanExtension
             this.repositoryId = repositoryId;
         }
 
-
-        //Bitmap GetBitmap(BitmapSource source)
-        //{
-        //    Bitmap bmp = new Bitmap(source.PixelWidth, source.PixelHeight, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-        //    BitmapData data = bmp.LockBits(new System.Drawing.Rectangle(System.Drawing.Point.Empty, bmp.Size), ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-        //    source.CopyPixels(
-        //      Int32Rect.Empty,
-        //      data.Scan0,
-        //      data.Height * data.Stride,
-        //      data.Stride);
-        //    bmp.UnlockBits(data);
-        //    return bmp;
-        //}
-
         public static Bitmap BitmapFromSource(BitmapSource bitmapsource)
         {
             Bitmap bitmap;
@@ -156,14 +142,9 @@ namespace ScanExtension
                         var binBitmap = new BinaryBitmap(binarizer);
                         BitMatrix bm = binBitmap.BlackMatrix;
                         Detector detector = new Detector(bm);
-                        //Hashtable hints = new Hashtable();
-                        //hints.Add(EncodeHintType.CHARACTER_SET, "utf-8");
-                        //hints.Add(EncodeHintType.CHARACTER_SET, "unicode");
                         var hintDic = new Dictionary<DecodeHintType, object>();
                         hintDic.Add(DecodeHintType.TRY_HARDER, true);
                         hintDic.Add(DecodeHintType.CHARACTER_SET, "utf-8");
-                        //hintDic.Add(DecodeHintType.CHARACTER_SET, "ascii");
-                        //hintDic.Add(DecodeHintType.PURE_BARCODE, Boolean.FALSE);
                         DetectorResult dtectResult = detector.detect(hintDic);
                         QRResultStack.Children.Clear();
                         
@@ -193,16 +174,14 @@ namespace ScanExtension
                                 //set metadata
 
 
-                                //this.propertyStack.Children.Clear();
+                                this.propertyStack.Children.Clear();
 
                                 var props = qrText.Split('|');
                                 prop1.Text = props.Length > 0 ? props[0] : "";
                                 prop2.Text = props.Length > 1 ? props[1] : "";
                                 prop3.Text = props.Length > 2 ? props[2] : "";
                                 prop4.Text = props.Length > 3 ? props[3] : "";
-
-
-
+                                
                                 break;
                             }
                             
