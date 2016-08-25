@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ScanExtension"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Oracle WCC Client(Light)" Height="350" Width="525" WindowState="Maximized">
     <Grid>
         <cefSharp:ChromiumWebBrowser Grid.Row="0" x:Name="browser"
         Address="https://github.com/cefsharp/CefSharp/wiki/Frequently-asked-questions" />

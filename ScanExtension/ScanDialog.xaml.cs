@@ -64,12 +64,11 @@ namespace ScanExtension
             var tempFile = System.IO.Path.GetTempFileName();
             var ids = GDScanService.Scan(Handle);
 
-            //if (ids.Count > 0) stack1.Children.RemoveAt(0);
+            if (ids.Count > 0) stack1.Children.RemoveAt(0); //remove scan button
 
             for (int i = 0; i < ids.Count; i++)
             {
                 //gdpicture.SelectPage(imageId, i);
-
                 byte[] imageBytes = null;
                 int lengths = 0;
                 gdpicture.SaveAsByteArray(ids[i], ref imageBytes, ref lengths, GdPicture11.DocumentFormat.DocumentFormatJPEG, 60);
@@ -79,7 +78,6 @@ namespace ScanExtension
                 stack1.Children.Add(new Separator());
                 
                 gdpicture.ReleaseGdPictureImage(ids[i]);
-                
             }
         }
 
